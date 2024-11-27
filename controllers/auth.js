@@ -3,11 +3,13 @@ const jwt = require('jwt-simple');
 
 // Registro de usuario
 exports.register = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, lastName, email, gender, password, role} = req.body;
+    // validarUsuario(req.body);
     try {
-        const user = new User({ name, email, password });
+        const user = new User({ name, lastName, email, gender, password, role});
+
         await user.save();
-        res.status(201).json({ message: 'Usuario registrado exitosamente' });
+        res.status(201).json({ message: 'Usuario creado exitosamente', user });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
