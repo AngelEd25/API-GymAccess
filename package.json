@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "vite build",
     "start": "nodemon index.js --host"
+    
   },
   "author": "Angel Eduardo Puc Barrera",
   "license": "ISC",
