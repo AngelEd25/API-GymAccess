@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jwt-simple');
+const bcrypt = require('bcrypt');
+
 
 // Registro de usuario
 exports.register = async (req, res) => {
