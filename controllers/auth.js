@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const jwt = require('jwt-simple');
+const jwt = require('../services/jwt');
 const bcrypt = require('bcrypt');
 
 
