@@ -17,7 +17,7 @@ const registerAccess = async (req, res) => {
 };
 
 // Leer todos los accesos (Read)
-const getAccesses = async (req, res) => {
+const getAccess = async (req, res) => {
    try {
        const accesses = await Access.find().populate('user');
        res.status(200).json(accesses);
@@ -27,10 +27,10 @@ const getAccesses = async (req, res) => {
 };
 
 // Leer un acceso por ID (Read)
-const getAccessById = async (req, res) => {
-   const { id } = req.params;
+const getAccessByUser = async (req, res) => {
+   const { idUser } = req.params;
    try {
-       const access = await Access.findById(id).populate('user');
+       const access = await Access.find(idUser).populate('user');
        if (!access) return res.status(404).json({ message: 'Acceso no encontrado' });
        res.status(200).json(access);
    } catch (error) {
@@ -64,8 +64,8 @@ const deleteAccess = async (req, res) => {
 };
 module.exports = {
    registerAccess,
-   getAccesses,
-   getAccessById,
+   getAccess,
+   getAccessByUser,
    updateAccess,
    deleteAccess,
 }
