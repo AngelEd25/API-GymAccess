@@ -7,11 +7,13 @@ const userSchema = new mongoose.Schema({
     address: { type: String, required: false },
     birthdate: { type: Date, required: false },
     gender: { type: String, enum: ['male', 'female', 'other'], required: false },
+
     image: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ['admin', 'trainer', 'user'], default: 'user' },
     status: { type: String, enum: ['active', 'inactive', 'suspended'], default: 'active'},
+    card: { type: mongoose.Schema.Types.ObjectId, ref: 'Card'},
     subscription: { type: mongoose.Schema.Types.ObjectId, ref: 'Subscription' }
 }, { timestamps: true });
 

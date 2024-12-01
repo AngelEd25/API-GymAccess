@@ -30,7 +30,7 @@ const getAccess = async (req, res) => {
 const getAccessByUser = async (req, res) => {
    const { idUser } = req.params;
    try {
-       const access = await Access.find(idUser).populate('user');
+        const access = await Access.find({ user: idUser }).populate('user');
        if (!access) return res.status(404).json({ message: 'Acceso no encontrado' });
        res.status(200).json(access);
    } catch (error) {

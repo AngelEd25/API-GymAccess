@@ -6,6 +6,4 @@ router.post('/access', registerAccess);
 router.get('/access', getAccess);
 router.get('/access/:idUser', getAccessByUser);
 
-
-
 module.exports = router;

@@ -7,7 +7,7 @@ const subscriptionSchema = new mongoose.Schema({
     endDate: { type: Date, required: true },
     status: { type: String, enum: ['activo', 'inactivo'], default: 'activo'},
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-}, { timestamps: true }); 
+}, { timestamps: true });
 
 const Subscription = mongoose.model('Subscription', subscriptionSchema);
 module.exports = Subscription;
