@@ -7,7 +7,7 @@ const createCard = async (req, res) => {
    const { lote, userId } = req.body;
    try {
        const card = new Card({ lote, user: userId });
-       const user = await User.findByIdAndUpdate(userId, { cardUID }, { lote });
+       const user = await User.updateUser(userId, { card }, { lote });
 
        await card.save();
        await user.save();
