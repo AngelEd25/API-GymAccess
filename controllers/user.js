@@ -20,7 +20,7 @@ const createUser = async (req, res) => {
 // Leer todos los usuarios (Read)
 const getUsers = async (req, res) => {
     try {
-        const users = await User.find().populate('subscription');
+        const users = await User.find().populate('cards');
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -31,9 +31,8 @@ const getUsers = async (req, res) => {
 const getUserById = async (req, res) => {
     const { id } = req.params;
     try {
-        const user = await User.findById(id)
+        const user = await User.findById(id).populate('card')
         .populate('subscription')
-        .populate('card')
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
         res.status(200).json(user);
     } catch (error) {
