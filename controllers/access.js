@@ -1,20 +1,34 @@
 const Access = require('../models/access');
+const Card = require('../models/card');
+
 
 // Registrar un acceso (Create)
 const registerAccess = async (req, res) => {
-   const { userId } = req.body;
-   try {
-       const access = new Access({
-            user: userId,
-            accessDate: new Date(),
-            accessGranted: true 
-        });
-       await access.save();
-       res.status(201).json({ message: 'Acceso registrado exitosamente', access });
-   } catch (error) {
-       res.status(400).json({ error: error.message });
-   }
-};
+    const { userId, lote } = req.body;
+  
+    try {
+      // Buscar la tarjeta que coincida con el lote
+      const card = await Card.findOne({ lote });
+  
+      if (!card) {
+        return res.status(404).json({ message: "No se encontró una tarjeta con el lote especificado" });
+      }
+  
+      // Registrar el acceso con la tarjeta encontrada
+      const access = new Access({
+        user: userId,
+        card: card._id, // Usar el ID de la tarjeta encontrada
+        accessDate: new Date(),
+        accessGranted: true,
+      });
+  
+      await access.save();
+  
+      res.status(201).json({ message: "Acceso registrado exitosamente", access });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
 
 // Leer todos los accesos (Read)
 const getAccess = async (req, res) => {

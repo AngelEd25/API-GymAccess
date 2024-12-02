@@ -7,10 +7,8 @@ const createCard = async (req, res) => {
    const { lote, userId } = req.body;
    try {
        const card = new Card({ lote, user: userId });
-       const user = await User.updateUser(userId, { card }, { lote });
 
        await card.save();
-       await user.save();
        res.status(201).json({ message: 'Tarjeta creada exitosamente', card });
    } catch (error) {
        res.status(400).json({ error: error.message });
