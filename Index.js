@@ -7,6 +7,8 @@ const routesAuth = require("./routes/auth")
 const routesUser = require("./routes/user")
 const routesSubscription = require("./routes/subscription")
 const routesAccess = require("./routes/access")
+const routesCard = require("./routes/card")
+
 
 
 console.log("INICIANDO API Gym Access...")
@@ -28,6 +30,8 @@ app.use("/gymaccess", routesUser);
 app.use("/gymaccess", routesAuth);
 app.use("/gymaccess", routesSubscription);
 app.use("/gymaccess", routesAccess);
+app.use("/gymaccess", routesCard);
+
 
 
 

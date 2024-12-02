@@ -1,10 +1,13 @@
 const Card = require('../models/card');
+const User = require('../models/user');
+
 
 // Crear una card (Create)
 const createCard = async (req, res) => {
    const { lote, userId } = req.body;
    try {
        const card = new Card({ lote, user: userId });
+       const user = await User.findByIdAndUpdate(userId, { card }, { lote });
        await card.save();
        res.status(201).json({ message: 'Tarjeta creada exitosamente', card });
    } catch (error) {
