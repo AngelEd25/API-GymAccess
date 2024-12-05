@@ -18,6 +18,7 @@ const registerAccess = async (req, res) => {
       const access = new Access({
         user: userId,
         card: card._id, // Usar el ID de la tarjeta encontrada
+        cardUID: lote,
         accessDate: new Date(),
         accessGranted: true,
       });
@@ -33,7 +34,9 @@ const registerAccess = async (req, res) => {
 // Leer todos los accesos (Read)
 const getAccess = async (req, res) => {
    try {
-       const accesses = await Access.find().populate('user');
+       const accesses = await Access.find()
+       .populate('card')
+       .populate('user');
        res.status(200).json(accesses);
    } catch (error) {
        res.status(500).json({ error: error.message });

@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 
 // Registro de usuario
-exports.register = async (req, res) => {
+const register = async (req, res) => {
     const { name, lastName, email, gender, password, role} = req.body;
     // validarUsuario(req.body);
     try {
@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
 };
 
 // Login de usuario
-exports.login = async (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -31,3 +31,8 @@ exports.login = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+module.exports = {
+    register,
+    login,
+}

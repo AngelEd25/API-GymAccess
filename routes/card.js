@@ -6,7 +6,7 @@ const { createCard, getCards, getCardById, updateCard, deleteCard, changeCardSta
 // Rutas para las suscripciones
 
 router.post('/card', createCard);  // Crear suscripción
-router.get('/card', getCards);  // Leer todas las suscripciones
+router.get('/cards', getCards);  // Leer todas las suscripciones
 router.get('/card/:id', getCardById);  // Leer una suscripción por ID
 router.put('/card/:id', updateCard);  // Actualizar una suscripción
 router.delete('/card/:id', deleteCard);  // Eliminar una suscripción (opcional)
