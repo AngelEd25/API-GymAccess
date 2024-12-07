@@ -69,7 +69,8 @@ const getUserById = async (req, res) => {
 // Actualizar un usuario (Update)
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const updates = req.body; // Ej. {name: 'Nuevo Nombre', email: 'nuevoemail@example.com'}
+    const { name, lastName, email, gender, password, role} = req.body;// Ej. {name: 'Nuevo Nombre', email: 'nuevoemail@example.com'}
+
     try {
         const user = await User.findByIdAndUpdate(id, updates, { new: true });
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
