@@ -6,7 +6,8 @@ const subscriptionSchema = new mongoose.Schema({
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     status: { type: String, enum: ['activo', 'inactivo'], default: 'activo'},
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    card: { type: mongoose.Schema.Types.ObjectId, ref: 'Card'},
 }, { timestamps: true });
 
 const Subscription = mongoose.model('Subscription', subscriptionSchema);
