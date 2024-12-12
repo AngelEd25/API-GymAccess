@@ -1,15 +1,33 @@
 const Subscription = require('../models/subscription');
+const User = require('../models/user');
 
 // Crear una suscripción (Create)
 const createSubscription = async (req, res) => {
-   const { type, price, startDate, endDate, userId } = req.body;
-   try {
-       const subscription = new Subscription({ type, price, startDate, endDate, user: userId });
-       await subscription.save();
-       res.status(201).json({ message: 'Suscripción creada exitosamente', subscription });
-   } catch (error) {
-       res.status(400).json({ error: error.message });
-   }
+   const { type, price, startDate, endDate, userId, card} = req.body;
+ 
+        // Buscar usuario para incluir la referencia a la subscripcion
+        const locateUser = await User.findById(
+            userId // ID del usuario a actualizar
+        );
+        if (!locateUser) {
+        
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        else{
+            // Crear la subscripcion asociada al usuario
+            const sub = new Subscription({ type, price, startDate, card, endDate, user: userId });
+            await sub.save();
+            // Actualizar el modelo de usuario para incluir la referencia a la tarjeta
+            const user = await User.findByIdAndUpdate(
+                userId, // ID del usuario a actualizar
+                { subscription: sub._id }, // Asignar la tarjeta creada
+                { new: true } // Retornar el usuario actualizado
+            );
+            res.status(201).json({ message: 'Suscripción creada exitosamente', sub });
+        }
+
+       
+
 };
 
 // Leer todas las suscripciones (Read)

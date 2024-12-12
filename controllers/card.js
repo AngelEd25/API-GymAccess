@@ -6,19 +6,24 @@ const User = require('../models/user');
 const createCard = async (req, res) => {
     const { lote, userId } = req.body;
     try {
-        // Crear la tarjeta asociada al usuario
-        const card = new Card({ lote, user: userId });
-        await card.save();
- 
         // Actualizar el modelo de usuario para incluir la referencia a la tarjeta
-        const user = await User.findByIdAndUpdate(
+        const locateUser = await User.findById(
             userId, // ID del usuario a actualizar
-            { card: card._id }, // Asignar la tarjeta creada
-            { new: true } // Retornar el usuario actualizado
         );
- 
-        if (!user) {
+        if (!locateUser) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        else{
+            // Crear la tarjeta asociada al usuario
+            const card = new Card({ lote, user: userId });
+            await card.save();
+            // Actualizar el modelo de usuario para incluir la referencia a la tarjeta
+            const user = await User.findByIdAndUpdate(
+                userId, // ID del usuario a actualizar
+                { card: card._id }, // Asignar la tarjeta creada
+                { new: true } // Retornar el usuario actualizado
+            );
+ 
         }
  
         res.status(201).json({ message: 'Tarjeta creada exitosamente', card, user });
