@@ -23,10 +23,9 @@ const createCard = async (req, res) => {
                 { card: card._id }, // Asignar la tarjeta creada
                 { new: true } // Retornar el usuario actualizado
             );
- 
+            res.status(201).json({ message: 'Tarjeta creada exitosamente', card, user });
         }
- 
-        res.status(201).json({ message: 'Tarjeta creada exitosamente', card, user });
+       
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
