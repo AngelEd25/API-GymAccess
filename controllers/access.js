@@ -3,11 +3,11 @@ const Card = require('../models/card');
 
 // Buscar acceso por UID de la tarjeta
 const getAccessByUID = async (req, res) => {
-  const { cardUID } = req.params;
+  const { cardUid } = req.params;
 
   try {
       // Buscar la tarjeta que coincida con el UID proporcionado
-      const card = await Card.findOne({ lote: cardUID });
+      const card = await Card.findOne({ cardUID: cardUid });
 
       if (!card) {
           return res.status(404).json({ message: "No se encontró una tarjeta con el UID especificado" });
