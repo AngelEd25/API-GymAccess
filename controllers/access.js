@@ -112,6 +112,7 @@ const deleteAccess = async (req, res) => {
 module.exports = {
    registerAccess,
    getAccess,
+   getAccessByUID,
    getAccessByUser,
    updateAccess,
    deleteAccess,
