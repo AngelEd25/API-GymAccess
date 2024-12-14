@@ -4,7 +4,7 @@ const { registerAccess, getAccess, getAccessByUID, getAccessByUser, deleteAccess
 
 router.post('/access', registerAccess);
 router.get('/access', getAccess);
-router.get('access/uid/:uid', getAccessByUID)
+router.get('/access/uid/:uid', getAccessByUID)
 router.get('/access/:idUser', getAccessByUser);
 router.delete('/access/:id', deleteAccess); 
 
