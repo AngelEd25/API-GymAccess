@@ -4,33 +4,31 @@ const User = require('../models/user');
 
 // Crear una card (Create)
 const createCard = async (req, res) => {
-    const { lote, userId } = req.body;
+    const { lote } = req.body;
     try {
-        // Actualizar el modelo de usuario para incluir la referencia a la tarjeta
-        const locateUser = await User.findById(
-            userId, // ID del usuario a actualizar
-        );
-        if (!locateUser) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
+        // Verificar si ya existe un lote igual en la base de datos
+        const existingCard = await Card.findOne({ lote });
+
+        if (existingCard) {
+            return res.status(400).json({ 
+                message: 'El lote ya existe en la base de datos' 
+            });
         }
-        else{
-            // Crear la tarjeta asociada al usuario
-            const card = new Card({ lote, user: userId });
-            await card.save();
-            // Actualizar el modelo de usuario para incluir la referencia a la tarjeta
-            const user = await User.findByIdAndUpdate(
-                userId, // ID del usuario a actualizar
-                { card: card._id }, // Asignar la tarjeta creada
-                { new: true } // Retornar el usuario actualizado
-            );
-            res.status(201).json({ message: 'Tarjeta creada exitosamente', card, user });
-        }
+
+        // Si no existe, crear la nueva tarjeta
+        const card = new Card({ lote });
+
+        await card.save();
+
+        res.status(201).json({ 
+            message: 'Tarjeta creada exitosamente', 
+            card 
+        });
        
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
- };
- 
+};
 
 // Leer todas las cards (Read)
 const getCards = async (req, res) => {
