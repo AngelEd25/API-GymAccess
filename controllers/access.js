@@ -7,7 +7,7 @@ const getAccessByUID = async (req, res) => {
 
   try {
       // Buscar la tarjeta que coincida con el UID proporcionado
-      const card = await Card.findOne({ cardUID: cardUid });
+      const card = await Card.findOne({ lote: cardUid });
 
       if (!card) {
           return res.status(404).json({ message: "No se encontró una tarjeta con el UID especificado" });
