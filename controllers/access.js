@@ -7,7 +7,7 @@ const getAccessByUID = async (req, res) => {
 
   try {
       // Buscar la tarjeta que coincida con el UID proporcionado
-      str = String(cardUid)
+      const str = String(cardUid)
       const card = await Card.findOne({ lote: str });
 
       if (!card) {
