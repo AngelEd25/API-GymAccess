@@ -26,7 +26,7 @@ const login = async (req, res) => {
             return res.status(400).json({ message: 'Credenciales incorrectas' });
         }
         const token = jwt.createToken({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token });
+        res.json({ token: token, user: user._id});
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -34,5 +34,5 @@ const login = async (req, res) => {
 
 module.exports = {
     register,
-    login,
+    login
 }

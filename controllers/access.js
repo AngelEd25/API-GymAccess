@@ -1,36 +1,6 @@
 const Access = require('../models/access');
 const Card = require('../models/card');
 
-// Buscar acceso por UID de la tarjeta
-const getAccessByUID = async (req, res) => {
-  const { cardUid } = req.params;
-
-  try {
-      // Buscar la tarjeta que coincida con el UID proporcionado
-      const card = await Card.findOne({ lote: cardUid });
-
-      if (!card) {
-          return res.status(404).json({ message: `No se encontró una tarjeta con el UID especificado: ${cardUid}` });
-      }
-
-      // Buscar el acceso relacionado con la tarjeta encontrada
-      const access = await Access.findOne({ card: card._id })
-          .populate('user') // Si necesitas incluir información del usuario
-          .populate('card'); // Si necesitas incluir información de la tarjeta
-
-      if (!access) {
-          return res.status(404).json({ message: "No se encontró acceso para esta tarjeta" });
-      }
-
-      // Respuesta con información del acceso
-      res.status(200).json({
-          message: "Acceso encontrado",
-          access
-      });
-  } catch (error) {
-      res.status(500).json({ error: error.message });
-  }
-};
 
 // Registrar un acceso (Create)
 const registerAccess = async (req, res) => {
@@ -60,6 +30,8 @@ const registerAccess = async (req, res) => {
       res.status(400).json({ error: error.message });
     }
   };
+
+  
 
 // Leer todos los accesos (Read)
 const getAccess = async (req, res) => {
@@ -112,7 +84,6 @@ const deleteAccess = async (req, res) => {
 module.exports = {
    registerAccess,
    getAccess,
-   getAccessByUID,
    getAccessByUser,
    updateAccess,
    deleteAccess,
